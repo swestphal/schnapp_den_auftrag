@@ -18,6 +18,10 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+            account_type = request.POST.get('account_type')
+            if account_type == 'employer':
+                user.userprofile.is_employer = True
+                user.userprofile.save()
             login(request, user)
             return redirect('frontpage')
     else:

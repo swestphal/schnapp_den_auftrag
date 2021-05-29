@@ -8,6 +8,18 @@
             <form method="post" action=".">
                 {% csrf_token %}
                 {{ form.as_p }}
+                <hr>
+                <div class="field">
+                    <label>Kontoart</label>
+                    <div class="control">
+                        <div class="select">
+                            <select name="account_type">
+                                <option name="jobseeker" selected>Ich suche einen Auftrag</option>
+                                <option name="employer">Ich vergebe einen Auftrag</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="field">
                     <div class="control">
                         <button class="button is-success is-small">Sign up</button>
