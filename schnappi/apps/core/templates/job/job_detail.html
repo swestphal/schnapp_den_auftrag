@@ -4,4 +4,5 @@
 <h1 class="title">{{ job.title }}</h1>
 <p class="is-size-4">{{ job.short_description }}</p>
 <p>{{ job.long_description }}</p>
+<a class="button is-success" href="{% url 'apply_for_job' job.id %}">Apply for job</a>
 {% endblock %}

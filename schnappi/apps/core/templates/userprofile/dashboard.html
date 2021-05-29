@@ -13,7 +13,14 @@
 <p>no jobs</p>
 {% endfor %}
 {% else %}
-<p>jobseeker</p>
+<h2 class="subtitle">Applications</h2>
+{% for application in request.user.applications.all %}
+<div class="application">
+    <a href="{% url 'view_application' application.id %}">{{ application.job.title }}</a>
+</div>
+{% empty %}
+<p>no applications</p>
+{% endfor %}
 {% endif %}
 
 {% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .forms import AddJobForm
+from .forms import AddJobForm, ApplicationForm
 from .models import Job
 
 
@@ -13,6 +13,31 @@ def job_detail(request, job_id):
         'job': job
     }
     return render(request, 'job/job_detail.html', context)
+
+
+@login_required
+def apply_for_job(request, job_id):
+    print("------")
+    job = Job.objects.get(pk=job_id)
+    print(job)
+    print(request.method)
+    if request.method == 'POST':
+        print("post")
+        form = ApplicationForm(request.POST)
+        if form.is_valid():
+            print("form valid")
+            application = form.save(commit=False)
+            application.job = job
+            application.created_by = request.user
+            application.save()
+            return redirect('dashboard')
+    else:
+        form = ApplicationForm()
+        context = {
+            'form': form,
+            'job': job
+        }
+    return render(request, 'job/apply_for_job.html', context)
 
 
 @login_required
