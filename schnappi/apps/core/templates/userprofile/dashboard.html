@@ -7,7 +7,7 @@
 <h2 class="subtitle">Jobs</h2>
 {% for job in request.user.jobs.all %}
 <div class="job">
-    {{ job.title }}
+    <a href="{% url 'view_dashboard_job' job.id %}">{{ job.title }}</a>
 </div>
 {% empty %}
 <p>no jobs</p>

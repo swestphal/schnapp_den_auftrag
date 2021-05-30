@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<h1 class="title">View job {{ job.title }}</h1>
+<small>Date added: {{ job.created_ad }}</small>
+<p><strong>Content: </strong>{{job.short_description}}</p>
+<p><strong>Experience: </strong>{{job.long_description}}</p>
+{% for application in job.applications.all %}
+<div class="application">
+    <a href="{% url 'view_application' application.id %}">{{ application.created_by.username }}</a>
+</div>
+{% empty %}
+<h4>No applications yet</h4>
+{% endfor %}
+{% endblock %}
