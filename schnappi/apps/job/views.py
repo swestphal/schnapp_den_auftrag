@@ -6,6 +6,8 @@ from apps.notification.utilities import create_notification
 
 
 # Create your views here.
+def search(request):
+    return render(request, 'job/search.html')
 
 
 def job_detail(request, job_id):
@@ -26,7 +28,6 @@ def apply_for_job(request, job_id):
 
         form = ApplicationForm(request.POST)
         if form.is_valid():
-
             application = form.save(commit=False)
             application.job = job
             application.created_by = request.user
