@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from apps.job.models import Application, Job
 from .models import ConversationMessage
-
+from apps.notification.utilities import create_notification
 
 # Create your views here.
 
@@ -17,6 +17,7 @@ def dashboard(request):
 @login_required
 def view_application(request, application_id):
     if request.user.userprofile.is_employer:
+
         application = get_object_or_404(Application, pk=application_id, job__created_by=request.user)
     else:
         application = get_object_or_404(Application, pk=application_id, created_by=request.user)
@@ -26,6 +27,7 @@ def view_application(request, application_id):
         if content:
             conversationmessage = ConversationMessage.objects.create(application=application, content=content,
                                                                      created_by=request.user)
+            create_notification(request, application.created_by, 'message', extra_id=application.id)
             return redirect('view_application', application_id=application_id)
     context = {
         'application': application
@@ -36,6 +38,7 @@ def view_application(request, application_id):
 @login_required
 def view_dashboard_job(request, job_id):
     job = get_object_or_404(Job, pk=job_id, created_by=request.user)
+
     context = {
         'job': job
     }

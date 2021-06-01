@@ -13,12 +13,15 @@ class Job(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     changed_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-created_at']
+
     def __str__(self):
         return self.title
 
 
 class Application(models.Model):
-    job = models.ForeignKey(Job, related_name='applicatiions', on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, related_name='applications', on_delete=models.CASCADE)
     content = models.TextField()
     experience = models.TextField()
     created_by = models.ForeignKey(User, related_name='applications', on_delete=models.CASCADE)
