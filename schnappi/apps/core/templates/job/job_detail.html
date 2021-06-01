@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<h1 class="title">{{ job.title }}</h1>
+<h1 class="title">{{ job.title }} - ({{job.get_status_display}}</h1>
 <p class="is-size-4">{{ job.short_description }}</p>
 <p>Company name: {{job.company_name}}</p>
 <p>Company address: {{job.company_address}}</p>
@@ -10,5 +10,9 @@
 <p>Company country: {{job.company_country}}</p>
 <p>Company size: {{job.get_company_size_display}}</p>
 <p>{{ job.long_description }}</p>
+{% if job.status =='active' %}
 <a class="button is-success" href="{% url 'apply_for_job' job.id %}">Apply for job</a>
+{% else %}
+<p>no more available</p>
+{% endif %}
 {% endblock %}

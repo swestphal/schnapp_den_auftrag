@@ -7,7 +7,7 @@ from apps.userprofile.models import Userprofile
 
 # Create your views here.
 def frontpage(request):
-    jobs = Job.objects.all()[0:3]
+    jobs = Job.objects.filter(status=Job.ACTIVE)[0:3]
     context = {
         'jobs': jobs
     }
